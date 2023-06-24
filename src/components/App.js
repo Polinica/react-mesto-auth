@@ -11,6 +11,7 @@ import ConfirmActionPopup from "./ConfirmActionPopup";
 import InfoPopup from "./InfoPopup";
 import Register from "./Register";
 import Login from "./Login";
+import ProtectedRoute from "./ProtectedRoute";
 
 import api from "../utils/Api";
 
@@ -33,7 +34,7 @@ function App() {
   const [cards, setCards] = React.useState([]);
 
   // Авторизация пользователя
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -177,7 +178,7 @@ function App() {
             <Route
               path="/"
               element={
-                loggedIn ? (
+                <ProtectedRoute isLoggiedIn={isLoggedIn}>
                   <Main
                     onEditProfile={handleEditProfileClick}
                     onAddPlace={handleAddPlaceClick}
@@ -187,9 +188,7 @@ function App() {
                     onCardLike={handleCardLike}
                     onCardDelete={handleCardDelete}
                   />
-                ) : (
-                  <Navigate to="/sign-in" />
-                )
+                </ProtectedRoute>
               }
             />
 
@@ -198,7 +197,7 @@ function App() {
             <Route
               path="*"
               element={
-                loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />
+                isLoggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />
               }
             />
           </Routes>
