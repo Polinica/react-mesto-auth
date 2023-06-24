@@ -3,12 +3,12 @@ import React from "react";
 import logo from "../images/Vector.svg";
 
 function Header({ children, isWrappable }) {
-  let links;
-  if (children.length > 1) {
-    links = children;
-  } else {
-    links = [children];
-  }
+  // let links;
+  // if (children.length > 1) {
+  //   links = children;
+  // } else {
+  //   links = [children];
+  // }
 
   const [isMenuOpened, setIsMenuOpened] = React.useState(false);
 
@@ -39,13 +39,13 @@ function Header({ children, isWrappable }) {
         )}
       </div>
 
-      {links && (
+      {children && (
         <ul
           className={
             "header__menu" + (isMenuOpened ? " header__menu_opened" : "")
           }
         >
-          {[...links].map((item, pos) => (
+          {(children.length > 1 ? children : [children]).map((item, pos) => (
             <li className="header__menu-item" key={pos}>
               {item}
             </li>

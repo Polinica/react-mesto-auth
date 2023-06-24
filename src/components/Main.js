@@ -11,8 +11,8 @@ function Main(props) {
   return (
     <>
       <Header isWrappable={true}>
-        <p className="header__menu-item">email@email.ru</p>
-        <button href="#" className="header__menu-item">
+        <p className="header__menu-item">{props.email}</p>
+        <button href="#" className="header__menu-item" onClick={props.onLogout}>
           Выйти
         </button>
       </Header>
