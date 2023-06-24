@@ -1,7 +1,8 @@
 .header__menu-button {
-  display: none;
+  /* display: none; */
   border: none;
   background-color: transparent;
+  cursor: pointer;
   width: 25px;
   height: 25px;
   background-image: url(../../../images/icon__burger.svg);
@@ -9,7 +10,10 @@
   background-size: contain;
   background-repeat: no-repeat;
   transition: opacity 0.3s;
-  cursor: pointer;
+  /* Расположение в сетке */
+  display: none;
+  grid-area: button;
+  margin-right: 30px;
 }
 
 @media (max-width: 425px) {

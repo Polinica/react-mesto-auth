@@ -8,6 +8,7 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ConfirmActionPopup from "./ConfirmActionPopup";
+import InfoPopup from "./InfoPopup";
 import Register from "./Register";
 import Login from "./Login";
 
@@ -21,6 +22,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [isInfoPopupOpen, setIsInfoPopupOpen] = React.useState(false);
 
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [toBeDeletedCard, setToBeDeletedCard] = React.useState(null);
@@ -75,6 +77,7 @@ function App() {
     setSelectedCard(null);
     //setIsImagePopupOpen(false);
     setToBeDeletedCard(null);
+    setIsInfoPopupOpen(false);
   }
 
   function handleUpdateUser(userInfo) {
@@ -164,7 +167,7 @@ function App() {
   }, [isOpen]);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <CurrentUserContext.Provider value={currentUser}>
         <div className="content">
           <Routes>
@@ -218,9 +221,9 @@ function App() {
                 }
               />
 
-              <Route path="sign-up" element={<Register />} />
+              <Route path="/sign-up" element={<Register />} />
 
-              <Route path="*" element={<Login />} />
+              <Route path="/sign-in" element={<Login />} />
             </Routes>
           </main>
 
@@ -254,6 +257,13 @@ function App() {
             card={selectedCard}
             onClose={closeAllPopups}
             //isOpen={isImagePopupOpen}
+          />
+
+          <InfoPopup
+            message="Успешно!"
+            isSuccessful={true}
+            isOpened={isInfoPopupOpen}
+            onClose={closeAllPopups}
           />
         </div>
       </CurrentUserContext.Provider>
