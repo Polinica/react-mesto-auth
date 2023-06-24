@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes, Link, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -23,11 +23,12 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isInfoPopupOpen, setIsInfoPopupOpen] = React.useState(false);
+  // const [isInfoPopupOpen, setIsInfoPopupOpen] = React.useState(false);
 
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [toBeDeletedCard, setToBeDeletedCard] = React.useState(null);
   //const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
+  const [infoMessage, setInfoMessage] = React.useState(null);
 
   const [currentUser, setCurrentUser] = React.useState({});
 
@@ -81,7 +82,7 @@ function App() {
     setSelectedCard(null);
     //setIsImagePopupOpen(false);
     setToBeDeletedCard(null);
-    setIsInfoPopupOpen(false);
+    setInfoMessage(null);
   }
 
   function handleUpdateUser(userInfo) {
@@ -94,6 +95,10 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  function handleShowInfoMessage(message) {
+    setInfoMessage(message);
   }
 
   function handleUpdateAvatar({ avatar }) {
@@ -192,7 +197,12 @@ function App() {
               }
             />
 
-            <Route path="/sign-up" element={<Register />} />
+            <Route
+              path="/sign-up"
+              element={
+                <Register handleShowInfoMessage={handleShowInfoMessage} />
+              }
+            />
             <Route path="/sign-in" element={<Login />} />
             <Route
               path="*"
@@ -235,9 +245,7 @@ function App() {
           />
 
           <InfoPopup
-            message="Успешно!"
-            isSuccessful={true}
-            isOpened={isInfoPopupOpen}
+            message={infoMessage}
             onClose={closeAllPopups}
           />
         </div>

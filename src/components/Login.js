@@ -1,8 +1,8 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 import Header from "./Header";
+import auth from "../utils/auth";
 
 function Login({ onSubmit }) {
   const [inputs, setInputs] = React.useState({

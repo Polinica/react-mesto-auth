@@ -1,14 +1,16 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-
 import Header from "./Header";
+import auth from "../utils/auth";
 
-function Register({ onSubmit }) {
-  const [inputs, setInputs] = React.useState({
+function Register({ handleShowInfoMessage }) {
+  const defaultValues = {
     email: "",
     password: "",
-  });
+  };
+
+  const [inputs, setInputs] = React.useState(defaultValues);
 
   function handleChange(event) {
     const value = event.target.value;
@@ -18,7 +20,26 @@ function Register({ onSubmit }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    onSubmit(inputs);
+    auth
+      .register(inputs)
+      .then((res) => {
+        handleShowInfoMessage({
+          text: "Вы успешно зарегистрировались!",
+          isSuccess: true,
+        });
+        resetForm();
+      })
+      .catch((err) => {
+        const text = err.message || "Что-то пошло не так! Попробуйте еще раз.";
+        handleShowInfoMessage({
+          text: text,
+          isSuccess: false,
+        });
+      });
+  }
+
+  function resetForm() {
+    setInputs({ ...defaultValues });
   }
 
   return (
@@ -32,7 +53,7 @@ function Register({ onSubmit }) {
       <main>
         <div className="login content__element">
           <h2 className="login__title">Регистрация</h2>
-          <form className="login__form" onSubmit={handleSubmit}>
+          <form className="login__form" onSubmit={handleSubmit} noValidate>
             <input
               type="email"
               className="login__input"
