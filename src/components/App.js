@@ -8,6 +8,8 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ConfirmActionPopup from "./ConfirmActionPopup";
+import Register from "./Register";
+import Login from "./Login";
 
 import api from "../utils/Api";
 
@@ -188,9 +190,9 @@ function App() {
                 }
               />
 
-              <Route path="sign-up" />
+              <Route path="sign-up" element={<Register />} />
 
-              <Route path="*" />
+              <Route path="*" element={<Login />} />
             </Routes>
           </main>
 
