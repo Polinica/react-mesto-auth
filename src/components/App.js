@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -168,9 +168,37 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <div className="content">
           <Routes>
-            <Route path="/" element={<Header />} />
-            <Route path="sign-up" element={<Header />} />
-            <Route path="*" element={<Header />} />
+            <Route
+              path="/"
+              element={
+                <Header>
+                  <p className="header__menu-item">Email</p>
+                  <button href="#" className="header__menu-item">
+                    Выйти
+                  </button>
+                </Header>
+              }
+            />
+            <Route
+              path="sign-up"
+              element={
+                <Header>
+                  <Link to="/sign-in" className="header__menu-item">
+                    Войти
+                  </Link>
+                </Header>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <Header>
+                  <Link to="/sign-up" className="header__menu-item">
+                    Регистрация
+                  </Link>
+                </Header>
+              }
+            />
           </Routes>
 
           <main>
