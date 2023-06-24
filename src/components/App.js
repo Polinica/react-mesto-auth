@@ -175,6 +175,15 @@ function App() {
     }
   }, [isOpen]);
 
+  // Авторизация
+  function handleLogin() {
+    setIsLoggedIn(true);
+  }
+
+  function handleLogout() {
+    setIsLoggedIn(false);
+  }
+
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <CurrentUserContext.Provider value={currentUser}>
@@ -203,7 +212,15 @@ function App() {
                 <Register handleShowInfoMessage={handleShowInfoMessage} />
               }
             />
-            <Route path="/sign-in" element={<Login />} />
+            <Route
+              path="/sign-in"
+              element={
+                <Login
+                  handleShowInfoMessage={handleShowInfoMessage}
+                  onLogin={handleLogin}
+                />
+              }
+            />
             <Route
               path="*"
               element={
@@ -244,10 +261,7 @@ function App() {
             //isOpen={isImagePopupOpen}
           />
 
-          <InfoPopup
-            message={infoMessage}
-            onClose={closeAllPopups}
-          />
+          <InfoPopup message={infoMessage} onClose={closeAllPopups} />
         </div>
       </CurrentUserContext.Provider>
     </BrowserRouter>

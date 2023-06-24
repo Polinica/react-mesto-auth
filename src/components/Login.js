@@ -4,11 +4,15 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import auth from "../utils/auth";
 
-function Login({ onSubmit }) {
-  const [inputs, setInputs] = React.useState({
+function Login({ handleShowInfoMessage, onLogin }) {
+  const defaultValues = {
     email: "",
     password: "",
-  });
+  };
+
+  const [inputs, setInputs] = React.useState(defaultValues);
+
+  const navigate = useNavigate();
 
   function handleChange(event) {
     const value = event.target.value;
@@ -18,7 +22,24 @@ function Login({ onSubmit }) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    onSubmit(inputs);
+    auth
+      .authorize(inputs)
+      .then((res) => {
+        resetForm();
+        onLogin();
+        navigate("/");
+      })
+      .catch((err) => {
+        const text = err.message || "Что-то пошло не так! Попробуйте еще раз.";
+        handleShowInfoMessage({
+          text: text,
+          isSuccess: false,
+        });
+      });
+  }
+
+  function resetForm() {
+    setInputs({ ...defaultValues });
   }
 
   return (
@@ -32,7 +53,7 @@ function Login({ onSubmit }) {
       <main>
         <div className="login content__element">
           <h2 className="login__title">Вход</h2>
-          <form className="login__form" onSubmit={handleSubmit}>
+          <form className="login__form" onSubmit={handleSubmit} noValidate>
             <input
               type="email"
               className="login__input"
