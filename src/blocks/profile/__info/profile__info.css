@@ -8,9 +8,11 @@
   gap: 16px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 850px) {
   .profile__info {
     max-width: 100%; /* На неболших экранах ширина полностью */
+    margin-bottom: 36px;
+    margin-top: 26px;
   }
 }
 
