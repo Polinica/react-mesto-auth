@@ -50,18 +50,36 @@ function App() {
     isAddPlacePopupOpen ||
     selectedCard;
 
-  React.useEffect(() => {
-    api.getUserInfo().then(setCurrentUser).catch(console.error);
-  }, []);
+  // React.useEffect(() => {
+  //   if (isLoggedIn) {
+  //     setIsLoading(true);
+  //     api.getUserInfo().then(setCurrentUser).catch(console.error);
+
+  //     api
+  //       .getInitialCards()
+  //       .then((res) => {
+  //         setCards(res);
+  //       })
+  //       .catch(console.error);
+  //   };
+  // }, []);
 
   React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch(console.error);
-  }, []);
+    if (isLoggedIn) {
+      setIsLoading(true);
+      Promise.all([api.getUserInfo(), api.getInitialCards()])
+        .then(([user, cards]) => {
+          setCurrentUser(user);
+          setCards(cards);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [isLoggedIn]);
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
